@@ -122,7 +122,7 @@ const TodoList = () => {
                                             <div className="mdc-text-field mdc-text-field--outlined">
                                                 <input type="text" className="mdc-text-field__input todo-list-input"
                                                        id="text-field-hero-input" value={todoInput}  onChange={evt => handleTodoChange(evt.target.value)} />
-                                                    <div className="mdc-notched-outline">
+                                                    <div className="mdc-notched-outline" style={{border:'1px solid #efefef'}}>
                                                         <div className="mdc-notched-outline__leading"></div>
 
                                                         <div className="mdc-notched-outline__trailing"></div>
@@ -136,6 +136,14 @@ const TodoList = () => {
                                         <div className="list-wrapper">
                                             <div className="table-responsive">
                                                 <table className="table">
+                                                    <thead className="bg-light">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Todos</th>
+                                                            <th>Todo Status</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
                                                     <tbody>
                                                         {todos.map((todo, index) => {
                                                             todo.removeTask = removeTask

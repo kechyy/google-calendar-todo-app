@@ -24,11 +24,11 @@ const Sidebar = () => {
                             </Link>
                         </div>
                         <div className="mdc-list-item mdc-drawer-item">
-                            <a className="mdc-drawer-link" href="pages/apps/calendar.html">
+                            <Link className="mdc-drawer-link" to="/calendar">
                                 <i className="material-icons-outlined mdc-list-item__start-detail mdc-drawer-item-icon"
                                    aria-hidden="true">calendar_today</i>
                                 Calendar
-                            </a>
+                            </Link>
                         </div>
                     </nav>
                 </div>

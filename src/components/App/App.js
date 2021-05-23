@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { TodoList } from  "../../pages";
+import { TodoList, Calendar } from  "../../pages";
 
 function App() {
   return (
@@ -12,8 +12,11 @@ function App() {
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
-              <Route path="/">
+              <Route exact path="/" >
                   <TodoList />
+              </Route>
+              <Route path="/calendar">
+                  <Calendar />
               </Route>
           </Switch>
       </Router>
