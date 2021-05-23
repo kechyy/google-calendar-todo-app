@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Footer, Sidebar, Navbar } from "../../components";
 import Todo from "./Todo";
 
 const TodoList = () => {
-    const [todos, setTodos] = useState([{
-            "id": 1,
-            "task": "Give dog a bath",
-            "complete": "true"
-        }, {
-            "id": 2,
-            "task": "Do laundry",
-            "complete": "true"
-        }]
-    );
+
+
+    var gapi = window.gapi=window.gapi;
+    var CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+    var API_KEY = process.env.REACT_APP_API_KEY;
+    var DISCOVERY_DOCS = [process.env.REACT_APP_DISCOVERY_DOCS];
+    var SCOPES = process.env.REACT_APP_SCOPES;
+
+
+    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('myTodos')));
     const [todoInput, setTodoInput] = useState("");
 
     function handleTodoChange(todoInput) {
@@ -22,6 +22,7 @@ const TodoList = () => {
            return false;
         }
     }
+
     function handleTodoSubmit(e) {
         e.preventDefault();
         const confirmTodo = todos.find(todo => todo.task === todoInput);
@@ -33,21 +34,76 @@ const TodoList = () => {
     }
 
     function addTask(todoInput) {
-        console.log("todoInput", todoInput)
+        const todoCopy = {
+            "id": todos.length + 1,
+            "task": todoInput,
+            "complete": "false"
+        }
 
-            const todoCopy = {
-                "id": todos.length + 1,
-                "task": todoInput,
-                "complete": "false"
-            }
-            const newTodo = [...todos, todoCopy];
-            setTodos(newTodo);
+        const newTodo = [...todos, todoCopy];
+        localStorage.setItem('myTodos', JSON.stringify(newTodo));
+        setTodos(JSON.parse(localStorage.getItem('myTodos')));
+
+        gapi.load('client: auth2', () => {
+            console.log('load client');
+
+            gapi.client.init({
+                apiKey: API_KEY,
+                clientId: CLIENT_ID,
+                // clientSecret: CLIENT_SECRET,
+                discoveryDocs: DISCOVERY_DOCS,
+                scope: SCOPES,
+            })
+
+            gapi.client.load('calendar', 'v3', () => console.log('ban!'));
+
+            gapi.auth2.getAuthInstance().signIn()
+                .then((result) => {
+                    console.log('result', result)
+                    var event = {
+                        'summary': 'Google I/O 2015',
+                        'location': '800 Howard St., San Francisco, CA 94103',
+                        'description': 'A chance to hear more about Google\'s developer products.',
+                        'start': {
+                            'dateTime': '2015-05-28T09:00:00-07:00',
+                            'timeZone': 'America/Los_Angeles'
+                        },
+                        'end': {
+                            'dateTime': '2015-05-28T17:00:00-07:00',
+                            'timeZone': 'America/Los_Angeles'
+                        },
+                        'recurrence': [
+                            'RRULE:FREQ=DAILY;COUNT=2'
+                        ],
+                        'attendees': [
+                            {'email': 'lpage@example.com'},
+                            {'email': 'sbrin@example.com'}
+                        ],
+                        'reminders': {
+                            'useDefault': true,
+                            'overrides': [
+                                {'method': 'email', 'minutes': 24 * 60},
+                                {'method': 'popup', 'minutes': 10}
+                            ]
+                        }
+                    };
+                    var request = gapi.client.calendar.events.insert({
+                        'calendarId': 'primary',
+                        'resource': event
+                    });
+
+                    request.execute(event => {
+                        window.open('Event created: ' + event.htmlLink);
+                    });
+                })
+        })
     }
 
     function removeTask(id) {
         console.log('id', id);
         const newTodo = todos.filter(todo => todo.id !== id);
-        setTodos(newTodo);
+        localStorage.setItem('myTodos', JSON.stringify(newTodo));
+        setTodos(JSON.parse(localStorage.getItem('myTodos')));
     }
 
     return (
@@ -81,10 +137,10 @@ const TodoList = () => {
                                             <div className="table-responsive">
                                                 <table className="table">
                                                     <tbody>
-                                                {todos.map((todo, index) => {
-                                                    todo.removeTask = removeTask
-                                                    return (<Todo {...todo } key={index}  />)
-                                                })}
+                                                        {todos.map((todo, index) => {
+                                                            todo.removeTask = removeTask
+                                                            return (<Todo {...todo } key={index}  />)
+                                                        })}
                                                     </tbody>
                                                 </table>
                                             </div>

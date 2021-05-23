@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './images/logo.png';
+import { Link }  from "react-router-dom";
 
 const Sidebar = () => {
     return (
@@ -16,11 +17,11 @@ const Sidebar = () => {
                             TODO APPLICATION
                         </div>
                         <div className="mdc-list-item mdc-drawer-item">
-                            <a className="mdc-drawer-link" href="pages/apps/todo.html">
+                            <Link to="/" className="mdc-drawer-link">
                                 <i className="material-icons-outlined mdc-list-item__start-detail mdc-drawer-item-icon"
                                    aria-hidden="true">event</i>
                                 Todo list
-                            </a>
+                            </Link>
                         </div>
                         <div className="mdc-list-item mdc-drawer-item">
                             <a className="mdc-drawer-link" href="pages/apps/calendar.html">
