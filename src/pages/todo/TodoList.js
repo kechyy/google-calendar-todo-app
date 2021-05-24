@@ -11,10 +11,13 @@ const TodoList = () => {
     var DISCOVERY_DOCS = [process.env.REACT_APP_DISCOVERY_DOCS];
     var SCOPES = process.env.REACT_APP_SCOPES;
 
+    const [todoInit, setInitialTodoLisit] = useState([]);
+    if(!(JSON.parse(localStorage.getItem('myTodos')))) {
+        localStorage.setItem('myTodos', JSON.stringify(todoInit));
+    }
 
     const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('myTodos')));
     const [todoInput, setTodoInput] = useState("");
-    // if(!todos) setTodos(JSON.stringify(localStorage.setItem('myTodos', [])))
 
     function handleTodoChange(todoInput) {
         if(todoInput){
@@ -103,6 +106,9 @@ const TodoList = () => {
     function removeTask(id) {
         console.log('id', id);
         const newTodo = todos.filter(todo => todo.id !== id);
+        if(newTodo.length < 1) {
+            localStorage.clear()
+        }
         localStorage.setItem('myTodos', JSON.stringify(newTodo));
         setTodos(JSON.parse(localStorage.getItem('myTodos')));
     }
@@ -146,7 +152,7 @@ const TodoList = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {todos > 0 ? todos.map((todo, index) => {
+                                                        {!!todos ? todos.map((todo, index) => {
                                                             todo.removeTask = removeTask
                                                             return (<Todo {...todo } key={index}  />)
                                                         }): ""}
