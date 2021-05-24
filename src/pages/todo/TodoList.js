@@ -14,6 +14,7 @@ const TodoList = () => {
 
     const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('myTodos')));
     const [todoInput, setTodoInput] = useState("");
+    // if(!todos) setTodos(JSON.stringify(localStorage.setItem('myTodos', [])))
 
     function handleTodoChange(todoInput) {
         if(todoInput){
@@ -145,7 +146,7 @@ const TodoList = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {todos.length > 0 ? todos.map((todo, index) => {
+                                                        {todos > 0 ? todos.map((todo, index) => {
                                                             todo.removeTask = removeTask
                                                             return (<Todo {...todo } key={index}  />)
                                                         }): ""}
