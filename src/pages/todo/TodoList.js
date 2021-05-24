@@ -152,10 +152,10 @@ const TodoList = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {!!todos ? todos.map((todo, index) => {
+                                                        {todos.map((todo, index) => {
                                                             todo.removeTask = removeTask
                                                             return (<Todo {...todo } key={index}  />)
-                                                        }): ""}
+                                                        })}
                                                     </tbody>
                                                 </table>
                                             </div>
