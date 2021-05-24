@@ -91,7 +91,7 @@ const TodoList = () => {
                             ]
                         }
                     };
-                    var request = gapi.client.calendar.events.insert({
+                    var request = gapi.client.calendar.events({
                         'calendarId': 'primary',
                         'resource': event
                     });
