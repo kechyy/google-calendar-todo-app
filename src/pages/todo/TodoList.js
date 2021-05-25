@@ -31,7 +31,7 @@ const TodoList = () => {
         e.preventDefault();
         const confirmTodo = todos.find(todo => todo.task === todoInput);
         console.log("confirmTodo", !!confirmTodo);
-        if(!confirmTodo && todoInput) {
+        if(confirmTodo.length < 1 && todoInput) {
             addTask(todoInput);
             setTodoInput("");
         }
@@ -49,7 +49,6 @@ const TodoList = () => {
         setTodos(JSON.parse(localStorage.getItem('myTodos')));
 
         gapi.load('client: auth2', () => {
-            console.log('load client');
 
             gapi.client.init({
                 apiKey: API_KEY,
