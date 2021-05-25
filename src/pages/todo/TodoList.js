@@ -94,9 +94,10 @@ const TodoList = () => {
                         'calendarId': 'primary',
                         'resource': event
                     });
-
+                    console.log('request', request);
                     request.execute(event => {
-                        window.open('Event created: ' + event.htmlLink);
+                        console.log('event',event.htmlLink)
+                        window.open('http://'+event.htmlLink, "_blank");
                     });
                 })
         })
