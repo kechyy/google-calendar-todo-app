@@ -5,7 +5,7 @@ import Todo from "./Todo";
 const TodoList = () => {
 
 
-    var gapi = window.gapi;
+    var gapi = window.gapi=window.gapi;
     var CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
     var API_KEY = process.env.REACT_APP_API_KEY;
     var DISCOVERY_DOCS = [process.env.REACT_APP_DISCOVERY_DOCS];
@@ -31,7 +31,7 @@ const TodoList = () => {
         e.preventDefault();
         const confirmTodo = todos.find(todo => todo.task === todoInput);
         console.log("confirmTodo", !!confirmTodo);
-        if(confirmTodo.length < 1 && todoInput) {
+        if(!confirmTodo && todoInput) {
             addTask(todoInput);
             setTodoInput("");
         }
