@@ -104,6 +104,12 @@ const TodoList = () => {
         })
     }
 
+    function handleKeyboardEnter(e) {
+            if (e.keyCode === 13) {
+                document.getElementById("add-task").click();
+            }
+    }
+
     function removeTask(id) {
         console.log('id', id);
         const newTodo = todos.filter(todo => todo.id !== id);
@@ -128,7 +134,7 @@ const TodoList = () => {
                                         <h4 className="card-title">Todo list</h4>
                                         <div className="add-items d-flex pt-4">
                                             <div className="mdc-text-field mdc-text-field--outlined">
-                                                <input type="text" className="mdc-text-field__input todo-list-input"
+                                                <input type="text" className="mdc-text-field__input todo-list-input" onKeyUp={e => handleKeyboardEnter(e)}
                                                        id="text-field-hero-input" value={todoInput}  onChange={evt => handleTodoChange(evt.target.value)} />
                                                     <div className="mdc-notched-outline" style={{border:'1px solid #efefef'}}>
                                                         <div className="mdc-notched-outline__leading"></div>
