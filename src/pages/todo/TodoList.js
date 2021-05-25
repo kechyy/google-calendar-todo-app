@@ -5,7 +5,7 @@ import Todo from "./Todo";
 const TodoList = () => {
 
 
-    var gapi = window.gapi=window.gapi;
+    var gapi = window.gapi;
     var CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
     var API_KEY = process.env.REACT_APP_API_KEY;
     var DISCOVERY_DOCS = [process.env.REACT_APP_DISCOVERY_DOCS];
@@ -91,12 +91,13 @@ const TodoList = () => {
                             ]
                         }
                     };
-                    var request = gapi.client.calendar.events({
+                    var request = gapi.client.calendar.events.insert({
                         'calendarId': 'primary',
                         'resource': event
                     });
 
                     request.execute(event => {
+                        console.log(event)
                         window.open('Event created: ' + event.htmlLink);
                     });
                 })
