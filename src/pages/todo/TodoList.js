@@ -96,7 +96,6 @@ const TodoList = () => {
                     });
 
                     request.execute(event => {
-                        console.log(event)
                         window.open('Event created: ' + event.htmlLink);
                     });
                 })
