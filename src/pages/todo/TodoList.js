@@ -97,7 +97,7 @@ const TodoList = () => {
                     console.log('request', request);
                     request.execute(event => {
                         console.log('event',event.htmlLink)
-                        window.open('https://'+event.htmlLink, "_blank");
+                        window.open("http://" + event.htmlLink, "_blank");
                     });
                 })
         })
