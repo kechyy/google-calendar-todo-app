@@ -83,7 +83,7 @@ const TodoList = () => {
                             {'email': 'sbrin@example.com'}
                         ],
                         'reminders': {
-                            'useDefault': true,
+                            'useDefault': false,
                             'overrides': [
                                 {'method': 'email', 'minutes': 24 * 60},
                                 {'method': 'popup', 'minutes': 10}
